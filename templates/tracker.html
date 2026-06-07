@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Cycle Tracker</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<style>
+
+body{
+height:100vh;
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+
+/* crystal background */
+background:linear-gradient(135deg,#fbc2eb,#a6c1ee);
+
+display:flex;   
+align-items:center;
+justify-content:center;
+}
+
+/* glass card */
+
+.glass-card{
+
+width:420px;
+padding:35px;
+
+background:rgba(255,255,255,0.25);
+
+border-radius:20px;
+
+backdrop-filter:blur(15px);
+-webkit-backdrop-filter:blur(15px);
+
+border:1px solid rgba(255,255,255,0.4);
+
+box-shadow:0 8px 32px rgba(0,0,0,0.25);
+
+color:#333;
+
+}
+
+h2{
+text-align:center;
+margin-bottom:20px;
+font-weight:600;
+}
+
+/* input style */
+
+.form-control{
+border-radius:12px;
+padding:10px;
+}
+
+/* result box */
+
+.result{
+
+background:rgba(255,255,255,0.5);
+padding:15px;
+border-radius:10px;
+margin-top:15px;
+text-align:center;
+font-size:18px;
+}
+
+/* button */
+
+.btn-main{
+border-radius:25px;
+padding:10px;
+font-weight:bold;
+transition:0.3s;
+}
+
+.btn-main:hover{
+transform:scale(1.05);
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="glass-card">
+
+<h2>🌸 Cycle Tracker</h2>
+
+<form method="POST">
+
+<label class="mb-1">Last Period Date</label>
+
+<input
+type="text"
+id="datePicker"
+name="last_period"
+class="form-control mb-3"
+placeholder="Select date"
+required
+>
+
+<label class="mb-1">Cycle Length (days)</label>
+
+<input
+type="number"
+name="cycle_length"
+class="form-control mb-3"
+placeholder="Example: 30"
+required
+>
+
+<button class="btn btn-danger w-100 btn-main">
+Predict Next Period
+</button>
+
+</form>
+
+{% if prediction %}
+
+<div class="result">
+
+🩸 Next Period Expected On
+
+<br><br>
+
+<strong>{{ prediction }}</strong>
+
+</div>
+
+{% endif %}
+
+<div class="text-center mt-3">
+
+<a href="/dashboard" class="btn btn-secondary">
+Back
+</a>
+
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+
+flatpickr("#datePicker",{
+dateFormat:"Y-m-d",
+maxDate:"today"
+});
+
+</script>
+
+</body>
+</html>
+
