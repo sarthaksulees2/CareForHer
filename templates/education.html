@@ -1,67 +1,168 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Health Education</title>
 
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>CareForHer - Health Education</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
 
-body{
-background:#eef2f7;
-font-family:'Segoe UI', sans-serif;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
 }
 
-/* HEADER */
+body{
 
-.page-title{
+background:linear-gradient(
+135deg,
+#ffdde1,
+#c2e9fb,
+#fbc2eb,
+#d4fc79
+);
+
+background-size:400% 400%;
+animation:bgMove 12s ease infinite;
+
+min-height:100vh;
+padding:30px;
+}
+
+@keyframes bgMove{
+
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+
+}
+
+.glass{
+
+background:rgba(255,255,255,0.18);
+
+backdrop-filter:blur(15px);
+-webkit-backdrop-filter:blur(15px);
+
+border:1px solid rgba(255,255,255,0.35);
+
+border-radius:25px;
+
+box-shadow:0 8px 32px rgba(0,0,0,0.12);
+}
+
+.hero{
+
+padding:35px;
 text-align:center;
-margin-top:30px;
+margin-bottom:25px;
+}
+
+.hero h1{
 font-weight:700;
 }
 
-/* EDUCATION CARD */
-
 .edu-card{
 
-background:white;
-
-border-radius:15px;
-
 padding:25px;
-
 margin-bottom:20px;
 
-box-shadow:0 5px 15px rgba(0,0,0,0.1);
-
-transition:0.3s;
-
+transition:.3s;
 }
 
 .edu-card:hover{
-transform:translateY(-3px);
+
+transform:translateY(-4px);
 }
-
-/* ICON */
-
-.icon{
-font-size:28px;
-margin-right:8px;
-}
-
-/* SECTION TITLE */
 
 .edu-title{
-font-weight:600;
-margin-bottom:10px;
+
+font-weight:700;
+margin-bottom:12px;
 }
 
-/* LIST */
+.stat-card{
 
-ul{
-padding-left:20px;
+padding:25px;
+text-align:center;
+height:180px;
+}
+
+.stat-card h2{
+
+font-size:42px;
+font-weight:700;
+color:#ff4d6d;
+}
+
+.glass-btn{
+
+display:inline-block;
+
+padding:14px 30px;
+
+border-radius:40px;
+
+background:rgba(255,255,255,0.2);
+
+backdrop-filter:blur(10px);
+
+border:1px solid rgba(255,255,255,0.4);
+
+color:#333;
+
+font-weight:600;
+
+text-decoration:none;
+
+transition:.3s;
+}
+
+.glass-btn:hover{
+
+background:rgba(255,255,255,0.4);
+
+color:#000;
+}
+
+.quiz-btn{
+
+display:inline-block;
+
+padding:14px 30px;
+
+border-radius:40px;
+
+background:linear-gradient(
+45deg,
+#ff4081,
+#7c4dff
+);
+
+color:white;
+
+font-weight:600;
+
+text-decoration:none;
+
+box-shadow:
+0 0 15px rgba(255,64,129,.5),
+0 0 30px rgba(124,77,255,.4);
+
+transition:.3s;
+}
+
+.quiz-btn:hover{
+
+transform:translateY(-3px);
+
+color:white;
 }
 
 </style>
@@ -72,156 +173,233 @@ padding-left:20px;
 
 <div class="container">
 
-<h2 class="page-title">📚 Menstrual Health Education</h2>
+<div class="glass hero">
 
-<p class="text-center text-muted mb-4">
-Learn about menstrual health, hygiene, nutrition, and myths.
+<h1>📚 Menstrual Health Education</h1>
+
+<p>
+Learn about menstrual health, hygiene, nutrition,
+mental wellness, and reproductive healthcare.
 </p>
 
+</div>
 
-<!-- WHAT IS MENSTRUATION -->
+<div class="row g-4 mb-4">
 
-<div class="edu-card">
+<div class="col-md-4">
+
+<div class="glass stat-card">
+
+<h2>28</h2>
+
+<p>Average Cycle Days</p>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="glass stat-card">
+
+<h2>5</h2>
+
+<p>Average Period Days</p>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="glass stat-card">
+
+<h2>14</h2>
+
+<p>Ovulation Day</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="glass edu-card">
 
 <h4 class="edu-title">🩸 What is Menstruation?</h4>
 
 <p>
-Menstruation is a natural biological process where the uterus sheds
-its lining once every month. This results in bleeding through the vagina
-and usually lasts between <b>3 to 7 days</b>.
+Menstruation is a natural biological process where
+the uterus sheds its lining each month.
 </p>
 
 <ul>
-<li>Occurs every <b>21–35 days</b> in most women.</li>
-<li>Part of the reproductive cycle.</li>
-<li>Begins during puberty (around age 10–15).</li>
-<li>Stops during menopause (around age 45–50).</li>
+<li>Occurs every 21–35 days.</li>
+<li>Usually lasts 3–7 days.</li>
+<li>Begins during puberty.</li>
+<li>Ends at menopause.</li>
 </ul>
 
 </div>
 
-
-<!-- MENSTRUAL HYGIENE -->
-
-<div class="edu-card">
+<div class="glass edu-card">
 
 <h4 class="edu-title">🧼 Menstrual Hygiene</h4>
 
-<p>
-Maintaining proper hygiene during menstruation is essential
-to prevent infections and ensure comfort.
-</p>
-
 <ul>
-<li>Use sanitary pads, menstrual cups, or tampons.</li>
-<li>Change pads every <b>4–6 hours</b>.</li>
-<li>Wash hands before and after changing products.</li>
-<li>Dispose of sanitary products properly.</li>
-<li>Keep the genital area clean and dry.</li>
+<li>Change pads every 4–6 hours.</li>
+<li>Wash hands regularly.</li>
+<li>Keep the genital area clean.</li>
+<li>Dispose products properly.</li>
+<li>Use clean sanitary products.</li>
 </ul>
 
 </div>
 
-
-<!-- NUTRITION -->
-
-<div class="edu-card">
+<div class="glass edu-card">
 
 <h4 class="edu-title">🥗 Nutrition During Periods</h4>
 
-<p>
-Eating a balanced diet helps reduce fatigue and supports
-the body during menstruation.
-</p>
-
 <ul>
-<li>Eat iron-rich foods like spinach and lentils.</li>
-<li>Include fruits such as bananas and oranges.</li>
-<li>Drink plenty of water to avoid dehydration.</li>
-<li>Avoid excessive caffeine and junk food.</li>
-<li>Consume nuts and seeds for healthy fats.</li>
+<li>Eat iron-rich foods.</li>
+<li>Drink plenty of water.</li>
+<li>Eat fruits and vegetables.</li>
+<li>Avoid excessive junk food.</li>
+<li>Consume nuts and seeds.</li>
 </ul>
 
 </div>
 
-
-<!-- SYMPTOMS -->
-
-<div class="edu-card">
+<div class="glass edu-card">
 
 <h4 class="edu-title">⚠️ Common Symptoms</h4>
 
-<p>
-Many people experience physical and emotional symptoms during periods.
-These symptoms are normal but vary from person to person.
-</p>
-
 <ul>
-<li>Abdominal cramps</li>
+<li>Cramps</li>
 <li>Back pain</li>
 <li>Mood swings</li>
-<li>Fatigue</li>
 <li>Headaches</li>
+<li>Fatigue</li>
 </ul>
-
-<p>
-Light exercise, warm compresses, and proper rest can help relieve symptoms.
-</p>
 
 </div>
 
+<div class="glass edu-card">
 
-<!-- MYTHS VS FACTS -->
+<h4 class="edu-title">🌸 Menstrual Cycle Phases</h4>
 
-<div class="edu-card">
+<ul>
+<li>Menstrual Phase</li>
+<li>Follicular Phase</li>
+<li>Ovulation Phase</li>
+<li>Luteal Phase</li>
+</ul>
+
+</div>
+
+<div class="glass edu-card">
+
+<h4 class="edu-title">💪 Exercise During Periods</h4>
+
+<ul>
+<li>Walking</li>
+<li>Yoga</li>
+<li>Stretching</li>
+<li>Cycling</li>
+<li>Breathing Exercises</li>
+</ul>
+
+</div>
+
+<div class="glass edu-card">
+
+<h4 class="edu-title">🧠 Mental Health & Mood</h4>
+
+<ul>
+<li>Mood swings</li>
+<li>Anxiety</li>
+<li>Stress</li>
+<li>Irritability</li>
+<li>Low energy</li>
+</ul>
+
+</div>
+
+<div class="glass edu-card">
+
+<h4 class="edu-title">🩺 PCOS Awareness</h4>
+
+<ul>
+<li>Irregular periods</li>
+<li>Weight gain</li>
+<li>Acne</li>
+<li>Hormonal imbalance</li>
+<li>Consult a doctor if symptoms persist.</li>
+</ul>
+
+</div>
+
+<div class="glass edu-card">
+
+<h4 class="edu-title">🩸 Preventing Anemia</h4>
+
+<ul>
+<li>Eat leafy vegetables.</li>
+<li>Consume iron-rich foods.</li>
+<li>Take vitamin C.</li>
+<li>Stay hydrated.</li>
+</ul>
+
+</div>
+
+<div class="glass edu-card">
 
 <h4 class="edu-title">❌ Myths vs Facts</h4>
 
 <ul>
-<li><b>Myth:</b> Women should not bathe during periods.<br>
-<b>Fact:</b> Bathing helps maintain hygiene and relieve cramps.</li>
 
-<li><b>Myth:</b> Period blood is dirty.<br>
-<b>Fact:</b> It is a natural mixture of blood and tissue.</li>
+<li>
+<b>Myth:</b> Women should not bathe during periods.
+<br>
+<b>Fact:</b> Bathing improves hygiene.
+</li>
 
-<li><b>Myth:</b> Exercise should be avoided.<br>
-<b>Fact:</b> Light exercise can reduce cramps and improve mood.</li>
+<li>
+<b>Myth:</b> Exercise should be avoided.
+<br>
+<b>Fact:</b> Exercise can reduce cramps.
+</li>
+
 </ul>
 
 </div>
 
-
-<!-- WHEN TO SEE DOCTOR -->
-
-<div class="edu-card">
+<div class="glass edu-card">
 
 <h4 class="edu-title">👩‍⚕️ When to See a Doctor</h4>
 
-<p>
-While periods are normal, some symptoms require medical attention.
-</p>
-
 <ul>
-<li>Extremely painful cramps</li>
+<li>Heavy bleeding</li>
+<li>Severe pain</li>
 <li>Periods lasting more than 7 days</li>
-<li>Very heavy bleeding</li>
-<li>Missing periods frequently</li>
-<li>Severe dizziness or weakness</li>
+<li>Frequent missed periods</li>
+<li>Severe dizziness</li>
 </ul>
 
 </div>
 
+<div class="text-center mt-4 mb-5">
 
-<!-- BUTTONS -->
+<a href="/dashboard" class="glass-btn me-3">
 
-<div class="text-center mb-5">
+⬅ Dashboard
 
-<a href="/dashboard" class="btn btn-secondary me-2">
-⬅ Back
 </a>
 
-<a href="/quiz" class="btn btn-danger">
-🧠 Take Health Quiz
+<a href="/quiz" class="quiz-btn">
+
+🧠 Health Quiz
+
 </a>
 
 </div>
