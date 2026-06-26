@@ -1,149 +1,492 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>MHM Hub — Login</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <style>
+<title>Care For Her - Login</title>
 
-        body {
-            background: linear-gradient(135deg,#4A90E2,#6fb1fc);
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Segoe UI', sans-serif;
-        }
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-        .card {
-            backdrop-filter: blur(14px);
-            background: rgba(255,255,255,0.15);
-            border-radius: 20px;
-            padding: 40px;
-            color: white;
-            width:380px;
-            box-shadow: 0 10px 35px rgba(0,0,0,0.25);
-        }
+<style>
 
-        .card h2{
-            font-weight:600;
-        }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
 
-        .form-control{
-            border-radius:12px;
-        }
+body{
+background:#f4f8ff;
+overflow:hidden;
+}
 
-        .btn-primary {
-            border-radius: 30px;
-            background:#4A90E2;
-            border:none;
-            font-weight:500;
-        }
+/* LEFT SIDE */
 
-        .btn-primary:hover{
-            background:#357bd8;
-        }
+.left-panel{
 
-        .form-check{
-            text-align:left;
-            font-size:14px;
-        }
+height:100vh;
 
-        a{
-            color:white;
-            text-decoration:underline;
-        }
+background:linear-gradient(
+135deg,
+#4A90E2,
+#6C63FF
+);
 
-        a:hover{
-            color:#e6f2ff;
-        }
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
 
-        .fixed-alert-wrapper {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1050;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            width: 320px;
-            max-width: calc(100vw - 40px);
-        }
+padding:40px;
+color:white;
+text-align:center;
+}
 
-        .fixed-alert-wrapper .alert {
-            border-radius: 14px;
-            box-shadow: 0 12px 28px rgba(0,0,0,0.16);
-        }
+.hero-img{
 
-    </style>
+width:280px;
+margin-bottom:30px;
+
+animation:float 4s ease-in-out infinite;
+}
+
+@keyframes float{
+
+0%{
+transform:translateY(0px);
+}
+
+50%{
+transform:translateY(-12px);
+}
+
+100%{
+transform:translateY(0px);
+}
+
+}
+
+.left-panel h1{
+
+font-size:3rem;
+font-weight:700;
+margin-bottom:15px;
+}
+
+.left-panel p{
+
+max-width:500px;
+font-size:18px;
+line-height:1.8;
+}
+
+/* RIGHT SIDE */
+
+.right-panel{
+
+height:100vh;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+background:white;
+}
+
+.login-card{
+
+width:420px;
+padding:20px;
+}
+
+/* LOGO */
+
+.logo{
+
+font-size:55px;
+margin-bottom:10px;
+}
+
+/* INPUTS */
+
+.form-control{
+
+height:55px;
+
+border-radius:14px;
+
+border:1px solid #dbe4f0;
+}
+
+.form-control:focus{
+
+box-shadow:none;
+
+border-color:#4A90E2;
+}
+
+/* LOGIN BUTTON */
+
+.login-btn{
+
+height:55px;
+
+border:none;
+
+border-radius:14px;
+
+background:linear-gradient(
+135deg,
+#4A90E2,
+#6C63FF
+);
+
+font-weight:600;
+font-size:16px;
+color:white;
+
+transition:.3s;
+}
+
+.login-btn:hover{
+
+transform:translateY(-2px);
+
+box-shadow:0 8px 20px rgba(74,144,226,.3);
+}
+
+/* TOAST POPUP */
+
+.toast-wrapper{
+position:fixed;
+top:25px;
+right:25px;
+z-index:9999;
+display:flex;
+flex-direction:column;
+gap:14px;
+}
+
+.toast-popup{
+display:flex;
+align-items:center;
+gap:14px;
+padding:16px 22px;
+border-radius:20px;
+backdrop-filter:blur(20px);
+-webkit-backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,0.25);
+font-weight:600;
+font-size:15px;
+color:white;
+min-width:300px;
+max-width:360px;
+animation:toastIn .45s cubic-bezier(.34,1.56,.64,1);
+position:relative;
+overflow:hidden;
+}
+
+.toast-popup::before{
+content:'';
+position:absolute;
+top:0;left:0;right:0;
+height:2px;
+border-radius:20px 20px 0 0;
+}
+
+.toast-popup.success{
+background:linear-gradient(135deg,rgba(30,180,100,0.45),rgba(0,210,150,0.35));
+border-color:rgba(46,213,115,0.35);
+box-shadow:0 0 30px rgba(46,213,115,0.35),0 8px 32px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.15);
+}
+
+.toast-popup.success::before{
+background:linear-gradient(90deg,#2ed573,#00d2a0);
+}
+
+.toast-popup.danger{
+background:linear-gradient(135deg,rgba(220,50,80,0.45),rgba(255,71,87,0.35));
+border-color:rgba(255,71,87,0.35);
+box-shadow:0 0 30px rgba(255,71,87,0.35),0 8px 32px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.15);
+}
+
+.toast-popup.danger::before{
+background:linear-gradient(90deg,#ff4757,#ff6b81);
+}
+
+.toast-msg{flex:1;line-height:1.4;}
+
+.toast-close{
+background:rgba(255,255,255,0.15);
+border:1px solid rgba(255,255,255,0.2);
+color:white;
+width:26px;
+height:26px;
+border-radius:50%;
+font-size:13px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-shrink:0;
+transition:.2s;
+}
+
+.toast-close:hover{background:rgba(255,255,255,0.3);}
+
+@keyframes toastIn{
+from{opacity:0;transform:translateX(80px) scale(0.85);}
+to{opacity:1;transform:translateX(0) scale(1);}
+}
+
+/* NO USER BANNER */
+
+.no-user-box{
+background:linear-gradient(135deg,rgba(74,144,226,0.12),rgba(108,99,255,0.10));
+border:1px solid rgba(74,144,226,0.3);
+backdrop-filter:blur(10px);
+-webkit-backdrop-filter:blur(10px);
+border-radius:16px;
+padding:18px 20px;
+margin-bottom:20px;
+text-align:center;
+}
+
+.no-user-box p{
+margin:0 0 12px;
+font-weight:600;
+color:#333;
+font-size:15px;
+}
+
+.no-user-box a{
+display:inline-block;
+padding:10px 28px;
+border-radius:30px;
+background:linear-gradient(135deg,#4A90E2,#6C63FF);
+color:white;
+font-weight:600;
+text-decoration:none;
+font-size:14px;
+transition:.3s;
+}
+
+.no-user-box a:hover{
+transform:translateY(-2px);
+box-shadow:0 8px 20px rgba(74,144,226,.35);
+color:white;
+}
+
+background:#ffe5e5;
+color:#d63031;
+
+padding:12px;
+
+border-radius:10px;
+
+margin-bottom:15px;
+}
+
+/* LINKS */
+
+.register-link{
+
+text-decoration:none;
+font-weight:600;
+}
+
+.register-link:hover{
+
+text-decoration:underline;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:992px){
+
+.left-panel{
+display:none;
+}
+
+.right-panel{
+width:100%;
+}
+
+.login-card{
+width:90%;
+max-width:420px;
+}
+
+}
+
+</style>
+
 </head>
 
 <body>
 
-<div class="fixed-alert-wrapper">
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
+<div class="toast-wrapper">
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<div class="toast-popup {{ category }}">
+<span class="toast-msg">{{ message }}</span>
+<button class="toast-close" onclick="this.parentElement.remove()">✕</button>
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
 </div>
 
-<div class="card text-center">
+<div class="container-fluid">
 
-    <h2>CARE FOR HER</h2>
-    <p>Login to your account</p>
+<div class="row">
 
-    <form method="POST">
+<!-- LEFT SECTION -->
 
-        {% if error %}
-            <p style="color:#ff6b6b; font-size:14px;">
-                ⚠️ {{ error }}
-            </p>
-        {% endif %}
+<div class="col-lg-6 left-panel">
 
-        <input
-            class="form-control mb-3"
-            name="email"
-            type="email"
-            placeholder="Email"
-            required>
+<img
+src="https://cdn-icons-png.flaticon.com/512/3774/3774299.png"
+class="hero-img">
 
-        <input
-            class="form-control mb-2"
-            id="password"
-            name="password"
-            type="password"
-            placeholder="Password"
-            required>
+<h1>Care For Her</h1>
 
-        <div class="form-check mb-3">
-            <input
-                class="form-check-input"
-                type="checkbox"
-                onclick="togglePassword()"
-                id="showPass">
+<p>
 
-            <label class="form-check-label" for="showPass">
-                Show Password
-            </label>
-        </div>
+Empowering Women Through Better
+Menstrual Health & Hygiene Management.
 
-        <button class="btn btn-primary w-100" type="submit">
-            Login
-        </button>
+Track cycles, access healthcare education,
+find nearby sanitary machines and receive
+healthcare support from one platform.
 
-    </form>
+</p>
 
-    <p class="mt-3">
-        Don't have an account?
-        <a href="/register">Register</a>
-    </p>
+</div>
+
+<!-- RIGHT SECTION -->
+
+<div class="col-lg-6 right-panel">
+
+<div class="login-card">
+
+<div class="text-center mb-4">
+
+<div class="logo">
+🌸
+</div>
+
+<h2 class="fw-bold">
+Welcome Back
+</h2>
+
+<p class="text-muted">
+
+Login to continue using Care For Her
+
+</p>
+
+</div>
+
+<form method="POST">
+
+{% if no_user %}
+<div class="no-user-box">
+<p>👤 No account found with this email. Create one to get started!</p>
+<a href="/register">➕ Create Account</a>
+</div>
+{% endif %}
+
+{% if error %}
+
+<div class="error-box">
+
+⚠️ {{ error }}
+
+</div>
+
+{% endif %}
+
+<input
+type="email"
+name="email"
+class="form-control mb-3"
+placeholder="Enter Email Address"
+required>
+
+<input
+type="password"
+id="password"
+name="password"
+class="form-control mb-3"
+placeholder="Enter Password"
+required>
+
+<div class="d-flex justify-content-between mb-4">
+
+<div class="form-check">
+
+<input
+class="form-check-input"
+type="checkbox"
+onclick="togglePassword()"
+id="showPass">
+
+<label
+class="form-check-label"
+for="showPass">
+
+Show Password
+
+</label>
+
+</div>
+
+<a href="#" class="register-link">
+
+Forgot Password?
+
+</a>
+
+</div>
+
+<button
+type="submit"
+class="btn login-btn w-100">
+
+Login
+
+</button>
+
+</form>
+
+<div class="text-center mt-4">
+
+<p>
+
+Don't have an account?
+
+<a
+href="/register"
+class="register-link">
+
+Register
+
+</a>
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
 
 </div>
 
@@ -151,30 +494,32 @@
 
 function togglePassword(){
 
-    var x = document.getElementById("password");
+var x =
+document.getElementById("password");
 
-    if(x.type === "password"){
-        x.type = "text";
-    }
-    else{
-        x.type = "password";
-    }
+if(x.type==="password"){
+
+x.type="text";
+
+}
+else{
+
+x.type="password";
+
 }
 
-setTimeout(function() {
+}
 
-    document.querySelectorAll('.fixed-alert-wrapper .alert')
-    .forEach(function(alert) {
-
-        alert.remove();
-
-    });
-
-}, 3500);
+setTimeout(function(){
+document.querySelectorAll('.toast-popup').forEach(function(t){
+t.style.transition='opacity .5s,transform .5s';
+t.style.opacity='0';
+t.style.transform='translateX(80px) scale(0.85)';
+setTimeout(()=>t.remove(),500);
+});
+},3500);
 
 </script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

@@ -2,675 +2,1183 @@
 <html>
 <head>
 
-<title>MHM Dashboard</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<style>
-
-/* DEFAULT LIGHT THEME */
-
-body{
-margin:0;
-min-height:100vh;
-font-family:'Segoe UI', sans-serif;
-background:#ffffff;
-color:#2c3e50;
-}
-
-/* HEADER */
-
-.header{
-padding:30px 40px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-.header h2{
-font-weight:600;
-color:#2c3e50;
-}
-
-/* PROFILE BUTTON */
-
-.profile-btn{
-display:inline-flex;
-align-items:center;
-gap:6px;
-background:#4A90E2;
-color:white;
-border-radius:30px;
-padding:6px 16px;
-font-size:14px;
-text-decoration:none;
-box-shadow:0 4px 12px rgba(0,0,0,0.15);
-transition:0.3s;
-}
-
-.profile-btn:hover{
-transform:translateY(-2px);
-background:#3b7bd1;
-}
-
-/* THEME BUTTON */
-
-.theme-btn{
-background:white;
-border-radius:25px;
-padding:6px 14px;
-border:none;
-box-shadow:0 3px 10px rgba(0,0,0,0.1);
-cursor:pointer;
-}
-
-/* CARD */
-
-.card-box{
-background:white;
-border-radius:18px;
-padding:24px;
-box-shadow:0 10px 30px rgba(0,0,0,0.08);
-transition:0.3s;
-text-align:center;
-display:flex;
-flex-direction:column;
-justify-content:flex-start;
-align-items:center;
-min-height:220px;
-color:#2c3e50;
-}
-
-.card-box h5,
-.card-box h6 {
-margin: 0 0 10px;
-}
-
-.card-box p {
-margin: 0;
-line-height: 1.4;
-}
-
-.horizontal-card-row{
-display:flex;
-flex-wrap:nowrap;
-gap:20px;
-overflow-x:auto;
-padding:20px 0;
-justify-content:center;
-scroll-snap-type:x mandatory;
-}
-
-.horizontal-card-row .col-md-4{
-flex:0 0 320px;
-max-width:320px;
-scroll-snap-align:start;
-}
-
-.horizontal-card-row .col-md-3{
-flex:0 0 220px;
-max-width:220px;
-scroll-snap-align:start;
-}
-
-.horizontal-card-row .col-md-3 .card-box {
-min-height: 180px;
-padding: 20px;
-justify-content: center;
-}
-
-.horizontal-card-row::-webkit-scrollbar {
-    height: 8px;
-}
-
-.horizontal-card-row::-webkit-scrollbar-thumb {
-    background: rgba(0,0,0,0.12);
-    border-radius: 10px;
-}
-
-.card-box:hover{
-transform:translateY(-6px);
-}
-
-/* ICON */
-
-.icon{
-font-size:38px;
-margin-bottom:12px;
-}
-
-/* BUTTON */
-
-.btn{
-border-radius:25px;
-padding:8px 22px;
-margin-top:15px;
-}
-
-/* HEALTH TIP */
-
-.tip-box{
-background:white;
-padding:22px;
-border-radius:12px;
-max-width:700px;
-margin:auto;
-text-align:center;
-box-shadow:0 5px 15px rgba(0,0,0,0.08);
-}
-
-/* CHAT BUTTON */
-
-#chatBtn{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#4A90E2;
-color:white;
-border:none;
-border-radius:50%;
-width:60px;
-height:60px;
-font-size:24px;
-box-shadow:0 4px 15px rgba(0,0,0,0.3);
-cursor:pointer;
-}
-
-/* CHATBOX */
-
-/* CHATBOX */
-
-.fixed-alert-wrapper {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1050;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    width: 320px;
-    max-width: calc(100vw - 40px);
-}
-
-.fixed-alert-wrapper .alert {
-    border-radius: 14px;
-    box-shadow: 0 12px 28px rgba(0,0,0,0.16);
-}
-
-#chatBox{
-display:none;
-position:fixed;
-bottom:90px;
-right:20px;
-width:380px;
-height:450px;
-background:white;
-border-radius:15px;
-box-shadow:0 10px 25px rgba(0,0,0,0.2);
-overflow:hidden;
-flex-direction:column;
-}
-
-/* CHAT HEADER */
-
-.chat-header{
-background:#4A90E2;
-color:white;
-padding:10px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-font-weight:bold;
-}
-
-.close-chat{
-background:none;
-border:none;
-color:white;
-cursor:pointer;
-}
-
-/* CHAT MESSAGES */
-
-#chatMessages{
-flex:1;
-overflow-y:auto;
-padding:10px;
-font-size:14px;
-}
-
-/* CHAT INPUT */
-
-.chat-input{
-display:flex;
-border-top:1px solid #ddd;
-}
-
-.chat-input input{
-flex:1;
-border:none;
-padding:10px;
-}
-
-.chat-input button{
-background:#4A90E2;
-color:white;
-border:none;
-padding:10px 15px;
-}
-
-.theme-menu{
-position:absolute;
-top:calc(100% + 6px);
-right:0;
-background:white;
-border:1px solid #ddd;
-border-radius:12px;
-padding:10px 12px;
-box-shadow:0 10px 22px rgba(0,0,0,0.14);
-display:none;
-width:180px;
-z-index:1000;
-color:#2c3e50;
-}
-
-.theme-menu label{
-display:flex;
-align-items:center;
-gap:10px;
-font-size:13px;
-margin-bottom:8px;
-cursor:pointer;
-}
-
-.theme-menu label:last-child{
-margin-bottom:0;
-}
-
-.theme-menu input{
-margin:0;
-accent-color:#4A90E2;
-}
-
-.dark-theme .theme-menu {
-background:#2d3e50;
-color:white;
-border-color:#3a4b60;
-}
-
-.dark-theme .theme-menu input {
-accent-color:#7fb3ff;
-}
-
-@media (prefers-color-scheme: dark) {
-  .system-theme .theme-menu {
-    background:#2d3e50;
-    color:white;
-    border-color:#3a4b60;
-  }
-
-  .system-theme .theme-menu input {
-    accent-color:#7fb3ff;
-  }
-}
-
-.light-theme{
-background:#ffffff;
-color:#2c3e50;
-}
-
-.dark-theme{
-background:#1f2d3d;
-color:white;
-}
-
-.system-theme{
-background:#ffffff;
-color:#2c3e50;
-}
-
-.system-theme .card-box,
-.system-theme .tip-box,
-.system-theme #chatBox{
-background:white;
-color:#2c3e50;
-}
-
-.system-theme .chat-input input{
-background:#ffffff;
-color:#2c3e50;
-border-color:#ddd;
-}
-
-@media (prefers-color-scheme: dark) {
-.system-theme{
-background:#1f2d3d;
-color:white;
-}
-
-.system-theme .header h2,
-.system-theme .card-box,
-.system-theme .tip-box,
-.system-theme #chatBox{
-color:white;
-}
-
-.system-theme .card-box,
-.system-theme .tip-box,
-.system-theme #chatBox{
-background:#2d3e50;
-}
-
-.system-theme .chat-input input{
-background:#1f2d3d;
-color:white;
-border-color:#3a4b60;
-}
-}
-
-.dark-theme .header h2{
-color:white;
-}
-
-.dark-theme .card-box{
-background:#2d3e50;
-color:white;
-}
-
-.dark-theme .tip-box{
-background:#2d3e50;
-color:white;
-}
-
-.dark-theme #chatBox{
-background:#2d3e50;
-color:white;
-}
-
-.dark-theme #chatMessages{
-color:white;
-}
-
-.dark-theme .chat-input input{
-background:#1f2d3d;
-color:white;
-}
-
-</style>
+  <title>MHM Dashboard</title>
+  <!-- Makes the page mobile-friendly -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap 5 — used for layout helpers like .container, .btn, .text-center -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <style>
+
+    /* ================================================================
+       1. BODY — BASE PAGE STYLES
+       Sets the default font, full-height page, and light background.
+       Theme classes (.light-theme / .dark-theme / .system-theme)
+       applied to <body> will override background & color below.
+    ================================================================ */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f4f8;   /* soft grey-white default background */
+      color: #2c3e50;        /* dark navy text */
+    }
+
+
+    /* ================================================================
+       2. GLASS UTILITY CLASS
+       This single class gives ANY element the glassmorphism look:
+       - semi-transparent blue-purple gradient background
+       - frosted glass blur (backdrop-filter)
+       - subtle blue border
+       - soft glow shadow
+       Usage: just add class="glass" to any HTML element.
+    ================================================================ */
+    .glass {
+      background: linear-gradient(
+        135deg,
+        rgba(74, 144, 226, 0.13) 0%,    /* blue tint start */
+        rgba(167, 119, 227, 0.10) 60%,  /* purple tint mid */
+        rgba(74, 144, 226, 0.07) 100%   /* blue tint end */
+      );
+      border: 1px solid rgba(74, 144, 226, 0.28);
+      backdrop-filter: blur(14px);           /* frosted glass blur */
+      -webkit-backdrop-filter: blur(14px);   /* Safari support */
+      box-shadow:
+        0 4px 24px rgba(74, 144, 226, 0.10),         /* outer glow */
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);     /* inner top highlight */
+    }
+
+
+    /* ================================================================
+       3. HEADER BAR
+       Flex row — welcome card on the left, nav buttons on the right.
+    ================================================================ */
+    .header {
+      padding: 30px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+
+    /* ================================================================
+       4. WELCOME CARD (left side of header)
+       A pill-shaped glass card showing:
+         [🌸 avatar] [Welcome back / Sarthak Sule]
+    ================================================================ */
+    .welcome-card {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      border-radius: 50px;            /* pill / capsule shape */
+      padding: 10px 24px 10px 14px;
+      /* glass background comes from the .glass class in HTML */
+    }
+
+    /* Circular gradient circle holding the 🌸 flower emoji */
+    .welcome-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4A90E2, #a777e3); /* blue→purple */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(74, 144, 226, 0.4);
+    }
+
+    /* Vertical stack: "WELCOME BACK" label on top, name below */
+    .welcome-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    /* Tiny uppercase label: "WELCOME BACK" */
+    .welcome-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(44, 62, 80, 0.5);   /* muted in light mode */
+      line-height: 1;
+    }
+
+    /* Main user name: "Sarthak Sule" — comes from {{ name }} */
+    .welcome-name {
+      font-size: 17px;
+      font-weight: 600;
+      color: #2c3e50;
+      line-height: 1.2;
+    }
+
+
+    /* ================================================================
+       5. PROFILE & THEME BUTTONS (right side of header)
+       Both are pill-shaped glass buttons, identical in style.
+       They share styles below, with individual overrides via :hover.
+    ================================================================ */
+    .profile-btn,
+    .theme-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 50px;            /* pill shape */
+      padding: 9px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #2c3e50;
+      cursor: pointer;
+      text-decoration: none;          /* remove underline from <a> */
+      transition: all 0.25s ease;     /* smooth hover animation */
+      /* glass background comes from the .glass class in HTML */
+    }
+
+    /* Hover state: brighter glass + slight lift */
+    .profile-btn:hover,
+    .theme-btn:hover {
+      background: linear-gradient(
+        135deg,
+        rgba(74, 144, 226, 0.28) 0%,
+        rgba(167, 119, 227, 0.22) 100%
+      );
+      border-color: rgba(74, 144, 226, 0.55);
+      transform: translateY(-2px);
+      color: #2c3e50;                 /* keep text colour on hover */
+    }
+
+    /* Small circle with gradient inside each button (holds the emoji icon) */
+    .btn-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      background: linear-gradient(135deg, #4A90E2, #a777e3);
+      box-shadow: 0 2px 6px rgba(74, 144, 226, 0.4);
+      flex-shrink: 0;
+    }
+
+
+    /* ================================================================
+       6. THEME DROPDOWN MENU
+       Hidden by default (display:none). JavaScript toggles it open
+       when the Theme button is clicked. Contains 3 radio options.
+    ================================================================ */
+    .theme-menu {
+      position: absolute;             /* floats below the Theme button */
+      top: calc(100% + 8px);
+      right: 0;
+      background: rgba(255, 255, 255, 0.90);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(74, 144, 226, 0.25);
+      border-radius: 14px;
+      padding: 12px 14px;
+      box-shadow: 0 10px 28px rgba(74, 144, 226, 0.14);
+      display: none;                  /* shown by JS: openThemeMenu() */
+      width: 185px;
+      z-index: 1000;
+      color: #2c3e50;
+    }
+
+    /* Each radio option row */
+    .theme-menu label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      margin-bottom: 9px;
+      cursor: pointer;
+    }
+
+    .theme-menu label:last-child {
+      margin-bottom: 0;               /* no extra space after last option */
+    }
+
+    .theme-menu input {
+      margin: 0;
+      accent-color: #4A90E2;          /* blue radio dot */
+    }
+
+
+    /* ================================================================
+       7. HORIZONTAL SCROLLABLE CARD ROW
+       A flex row of cards that scrolls horizontally if screen is small.
+       Snap-scrolling keeps cards aligned cleanly.
+    ================================================================ */
+    .horizontal-card-row {
+      display: flex;
+      flex-wrap: nowrap;              /* keep all cards in one row */
+      gap: 20px;
+      overflow-x: auto;              /* horizontal scroll when needed */
+      padding: 20px 0;
+      justify-content: center;
+      scroll-snap-type: x mandatory; /* snap to each card */
+    }
+
+    /* Large feature cards: Cycle Tracker, Find Machines, Education */
+    .horizontal-card-row .col-md-4 {
+      flex: 0 0 320px;               /* fixed 320px width, no shrinking */
+      max-width: 320px;
+      scroll-snap-align: start;
+    }
+
+    /* Small data stat cards: Last Period, Cycle Length, Next Period, Status */
+    .horizontal-card-row .col-md-3 {
+      flex: 0 0 220px;               /* fixed 220px width */
+      max-width: 220px;
+      scroll-snap-align: start;
+    }
+
+    /* Extra padding adjustments for small stat cards */
+    .horizontal-card-row .col-md-3 .card-box {
+      min-height: 180px;
+      padding: 20px;
+      justify-content: center;       /* vertically center the content */
+    }
+
+    /* Styled scrollbar — thin blue-tinted bar */
+    .horizontal-card-row::-webkit-scrollbar {
+      height: 6px;
+    }
+    .horizontal-card-row::-webkit-scrollbar-thumb {
+      background: rgba(74, 144, 226, 0.25);
+      border-radius: 10px;
+    }
+
+
+    /* ================================================================
+       8. CARD BOX (.card-box)
+       Used for ALL cards on the page — both large feature cards
+       and small stat cards. Glass background comes from .glass class.
+    ================================================================ */
+    .card-box {
+      border-radius: 18px;
+      padding: 24px;
+      transition: all 0.3s ease;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      min-height: 220px;
+      color: #2c3e50;
+      /* NO solid background here — transparency from .glass class */
+    }
+
+    /* Remove default margin from headings inside cards */
+    .card-box h5,
+    .card-box h6 {
+      margin: 0 0 10px;
+    }
+
+    /* Paragraph text inside card */
+    .card-box p {
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    /* Hover: lift card up + stronger glow */
+    .card-box:hover {
+      transform: translateY(-6px);
+      box-shadow:
+        0 16px 36px rgba(74, 144, 226, 0.20),
+        inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    }
+
+
+    /* ================================================================
+       9. CARD ICON
+       Large emoji displayed at the top of each card.
+    ================================================================ */
+    .icon {
+      font-size: 38px;
+      margin-bottom: 12px;
+    }
+
+
+    /* ================================================================
+       10. CARD ACTION BUTTONS (Open Tracker, Open Locator, etc.)
+        Bootstrap .btn with custom rounded pill shape.
+    ================================================================ */
+    .btn {
+      border-radius: 25px;
+      padding: 8px 22px;
+      margin-top: 15px;
+    }
+
+
+    /* ================================================================
+       11. HEALTH TIP BOX
+       Centered glass panel below the data cards showing a daily tip.
+       Background and border come from .glass class.
+    ================================================================ */
+    .tip-box {
+      padding: 24px 28px;
+      border-radius: 16px;
+      max-width: 700px;
+      margin: auto;
+      text-align: center;
+      color: #2c3e50;
+    }
+
+
+    /* ================================================================
+       12. TOAST POPUP (top-right notifications)
+    ================================================================ */
+    .toast-wrapper {
+      position: fixed;
+      top: 25px;
+      right: 25px;
+      z-index: 1050;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .toast-popup {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 22px;
+      border-radius: 20px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.25);
+      font-weight: 600;
+      font-size: 15px;
+      color: white;
+      min-width: 300px;
+      max-width: 360px;
+      animation: toastIn .45s cubic-bezier(.34,1.56,.64,1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .toast-popup::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      border-radius: 20px 20px 0 0;
+    }
+
+    .toast-popup.success {
+      background: linear-gradient(135deg,rgba(30,180,100,0.45),rgba(0,210,150,0.35));
+      border-color: rgba(46,213,115,0.35);
+      box-shadow: 0 0 30px rgba(46,213,115,0.35),0 8px 32px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.15);
+    }
+
+    .toast-popup.success::before {
+      background: linear-gradient(90deg,#2ed573,#00d2a0);
+    }
+
+    .toast-popup.danger {
+      background: linear-gradient(135deg,rgba(220,50,80,0.45),rgba(255,71,87,0.35));
+      border-color: rgba(255,71,87,0.35);
+      box-shadow: 0 0 30px rgba(255,71,87,0.35),0 8px 32px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.15);
+    }
+
+    .toast-popup.danger::before {
+      background: linear-gradient(90deg,#ff4757,#ff6b81);
+    }
+
+    .toast-popup.info {
+      background: linear-gradient(135deg,rgba(74,144,226,0.45),rgba(108,99,255,0.35));
+      border-color: rgba(74,144,226,0.35);
+      box-shadow: 0 0 30px rgba(74,144,226,0.35),0 8px 32px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.15);
+    }
+
+    .toast-popup.info::before {
+      background: linear-gradient(90deg,#4A90E2,#6C63FF);
+    }
+
+    .toast-msg { flex: 1; line-height: 1.4; }
+
+    .toast-close {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: white;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: .2s;
+    }
+
+    .toast-close:hover { background: rgba(255,255,255,0.3); }
+
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateX(80px) scale(0.85); }
+      to   { opacity: 1; transform: translateX(0) scale(1); }
+    }
+
+
+    /* ================================================================
+       HISTORY MODAL
+    ================================================================ */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn .25s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .modal-box {
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 24px;
+      padding: 30px;
+      width: 90%;
+      max-width: 700px;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 0 60px rgba(74,144,226,0.25), 0 20px 60px rgba(0,0,0,0.3);
+      animation: modalIn .35s cubic-bezier(.34,1.56,.64,1);
+      color: #2c3e50;
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.88) translateY(30px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .modal-close {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: inherit;
+      transition: .2s;
+    }
+
+    .modal-close:hover {
+      background: rgba(255,71,87,0.3);
+      border-color: rgba(255,71,87,0.5);
+    }
+
+    .history-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .history-table thead tr {
+      background: linear-gradient(135deg, rgba(74,144,226,0.3), rgba(167,119,227,0.25));
+    }
+
+    .history-table th {
+      padding: 12px 14px;
+      text-align: left;
+      font-weight: 600;
+      border-bottom: 1px solid rgba(74,144,226,0.25);
+    }
+
+    .history-table td {
+      padding: 11px 14px;
+      border-bottom: 1px solid rgba(74,144,226,0.12);
+    }
+
+    .history-table tbody tr:hover {
+      background: rgba(74,144,226,0.08);
+    }
+
+    .no-history {
+      text-align: center;
+      padding: 30px;
+      opacity: 0.6;
+      font-size: 15px;
+    }
+
+    .dark-theme .modal-box  { color: #ffffff; }
+    .system-theme .modal-box { color: #2c3e50; }
+    @media (prefers-color-scheme: dark) {
+      .system-theme .modal-box { color: #ffffff; }
+    }
+
+
+    /* ================================================================
+       13. FLOATING CHAT BUTTON (bottom-right corner)
+       Fixed position — always visible. Clicking toggles chat popup.
+    ================================================================ */
+    #chatBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #4A90E2, #a777e3);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+      box-shadow: 0 4px 18px rgba(74, 144, 226, 0.45);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    #chatBtn:hover {
+      transform: scale(1.10);        /* slightly enlarge on hover */
+    }
+
+
+    /* ================================================================
+       14. CHAT BOX POPUP
+       Slides up from the bottom-right when chat button is clicked.
+       Hidden by default (display:none) — JS switches to flex to show.
+       Glass background comes from .glass class.
+    ================================================================ */
+    #chatBox {
+      display: none;                 /* toggleChat() switches this to flex */
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: 380px;
+      height: 450px;
+      border-radius: 16px;
+      overflow: hidden;
+      flex-direction: column;        /* stack: header / messages / input */
+    }
+
+    /* Coloured top bar of the chat window */
+    .chat-header {
+      background: linear-gradient(135deg, #4A90E2, #a777e3);
+      color: white;
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    /* X button to close the chat */
+    .close-chat {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    /* Scrollable message history area */
+    #chatMessages {
+      flex: 1;                       /* takes all available height */
+      overflow-y: auto;
+      padding: 12px;
+      font-size: 14px;
+      color: #2c3e50;
+    }
+
+    /* Bottom input bar: text field + Send button side by side */
+    .chat-input {
+      display: flex;
+      border-top: 1px solid rgba(74, 144, 226, 0.20);
+    }
+
+    .chat-input input {
+      flex: 1;
+      border: none;
+      padding: 10px 12px;
+      background: transparent;
+      color: #2c3e50;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .chat-input button {
+      background: linear-gradient(135deg, #4A90E2, #a777e3);
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+
+    /* ================================================================
+       15. LIGHT THEME  (.light-theme added to <body>)
+       Explicit light mode — white/off-white background, dark text.
+    ================================================================ */
+    .light-theme {
+      background: #f0f4f8;
+      color: #2c3e50;
+    }
+
+    /* In light theme, keep all text colours dark */
+    .light-theme .welcome-label      { color: rgba(44, 62, 80, 0.50); }
+    .light-theme .welcome-name       { color: #2c3e50; }
+    .light-theme .profile-btn,
+    .light-theme .theme-btn          { color: #2c3e50; }
+    .light-theme .profile-btn:hover,
+    .light-theme .theme-btn:hover    { color: #2c3e50; }
+    .light-theme .card-box           { color: #2c3e50; }
+    .light-theme .tip-box            { color: #2c3e50; }
+    .light-theme #chatMessages       { color: #2c3e50; }
+    .light-theme .chat-input input   { color: #2c3e50; }
+    .light-theme .theme-menu         { background: rgba(255,255,255,0.90); color: #2c3e50; }
+
+
+    /* ================================================================
+       16. DARK THEME  (.dark-theme added to <body>)
+       Deep navy background, white text, brighter glass borders.
+    ================================================================ */
+    .dark-theme {
+      background: #1f2d3d;           /* deep navy */
+      color: white;
+    }
+
+    /* Glass elements get brighter tint + white text in dark mode */
+    .dark-theme .glass {
+      background: linear-gradient(
+        135deg,
+        rgba(74, 144, 226, 0.22) 0%,
+        rgba(167, 119, 227, 0.18) 60%,
+        rgba(74, 144, 226, 0.12) 100%
+      );
+      border-color: rgba(74, 144, 226, 0.40);
+    }
+
+    .dark-theme .welcome-label       { color: rgba(255, 255, 255, 0.45); }
+    .dark-theme .welcome-name        { color: #ffffff; }
+
+    .dark-theme .profile-btn,
+    .dark-theme .theme-btn           { color: #ffffff; }
+    .dark-theme .profile-btn:hover,
+    .dark-theme .theme-btn:hover     { color: #ffffff; }
+
+    /* Theme dropdown in dark mode */
+    .dark-theme .theme-menu {
+      background: rgba(28, 42, 58, 0.92);
+      color: white;
+      border-color: rgba(74, 144, 226, 0.32);
+    }
+    .dark-theme .theme-menu input    { accent-color: #7fb3ff; }
+
+    .dark-theme .card-box            { color: #ffffff; }
+    .dark-theme .tip-box             { color: #ffffff; }
+    .dark-theme #chatMessages        { color: #ffffff; }
+    .dark-theme .chat-input input    { color: #ffffff; }
+
+
+    /* ================================================================
+       17. SYSTEM THEME  (.system-theme added to <body>)
+       Follows the operating system's dark/light preference.
+       Light styles are default; dark styles applied via @media query.
+    ================================================================ */
+    .system-theme {
+      background: #f0f4f8;
+      color: #2c3e50;
+    }
+
+    /* System theme light-mode text colours */
+    .system-theme .welcome-label     { color: rgba(44, 62, 80, 0.50); }
+    .system-theme .welcome-name      { color: #2c3e50; }
+    .system-theme .profile-btn,
+    .system-theme .theme-btn         { color: #2c3e50; }
+    .system-theme .card-box          { color: #2c3e50; }
+    .system-theme .tip-box           { color: #2c3e50; }
+    .system-theme .theme-menu        { background: rgba(255,255,255,0.90); color: #2c3e50; }
+    .system-theme #chatMessages      { color: #2c3e50; }
+    .system-theme .chat-input input  { color: #2c3e50; }
+
+    /* When the OS is set to dark mode, apply dark styles automatically */
+    @media (prefers-color-scheme: dark) {
+
+      .system-theme {
+        background: #1f2d3d;
+        color: white;
+      }
+
+      .system-theme .glass {
+        background: linear-gradient(
+          135deg,
+          rgba(74, 144, 226, 0.22) 0%,
+          rgba(167, 119, 227, 0.18) 60%,
+          rgba(74, 144, 226, 0.12) 100%
+        );
+        border-color: rgba(74, 144, 226, 0.40);
+      }
+
+      .system-theme .welcome-label   { color: rgba(255, 255, 255, 0.45); }
+      .system-theme .welcome-name    { color: #ffffff; }
+      .system-theme .profile-btn,
+      .system-theme .theme-btn       { color: #ffffff; }
+      .system-theme .theme-menu      { background: rgba(28,42,58,0.92); color: white; border-color: rgba(74,144,226,0.32); }
+      .system-theme .theme-menu input{ accent-color: #7fb3ff; }
+      .system-theme .card-box        { color: #ffffff; }
+      .system-theme .tip-box         { color: #ffffff; }
+      .system-theme #chatMessages    { color: #ffffff; }
+      .system-theme .chat-input input{ color: #ffffff; }
+
+    }
+
+  </style>
 
 </head>
 
+<!-- ================================================================
+     BODY
+     id="body" is used by JavaScript to toggle theme classes
+================================================================ -->
 <body id="body">
 
-<div class="header">
 
-<h2>🌸 Welcome, {{ name }}</h2>
+  <!-- ================================================================
+       SECTION A: HEADER
+       Left  → Welcome glass pill card (avatar + name)
+       Right → Profile link + Theme toggle button (both glass pills)
+  ================================================================ -->
+  <div class="header">
 
-<div style="display:flex; gap:10px; position:relative;">
+    <!-- Welcome Card: .glass gives the transparent gradient background -->
+    <div class="welcome-card glass">
+      <!-- Circular gradient avatar circle with flower emoji -->
+      <div class="welcome-avatar">🌸</div>
 
-<a href="/profile" class="profile-btn">👤 Profile</a>
+      <!-- Text stack: small label + user name from Flask {{ name }} -->
+      <div class="welcome-text">
+        <span class="welcome-label">Welcome back</span>
+        <span class="welcome-name">{{ name }}</span>
+        <!-- ^ Flask/Jinja2 fills {{ name }} from the route's render_template() -->
+      </div>
+    </div>
 
-<button id="themeButton" type="button" class="theme-btn" onclick="openThemeMenu()">🎨 Theme</button>
+    <!-- Right side nav buttons — positioned relative so the dropdown anchors correctly -->
+    <div style="display:flex; gap:10px; position:relative;">
 
-<div class="theme-menu" id="themeMenu" role="dialog" aria-label="Theme selection">
-<label><input type="radio" name="theme" value="system" onclick="selectTheme('system')"> System default</label>
-<label><input type="radio" name="theme" value="light" onclick="selectTheme('light')"> Light</label>
-<label><input type="radio" name="theme" value="dark" onclick="selectTheme('dark')"> Dark</label>
-</div>
+      <!-- Profile Button: links to /profile page -->
+      <a href="/profile" class="profile-btn glass">
+        <div class="btn-icon">👤</div>
+        Profile
+      </a>
 
-</div>
+      <!-- Theme Button: clicking calls openThemeMenu() to show/hide dropdown -->
+      <button id="themeButton" type="button" class="theme-btn glass" onclick="openThemeMenu()">
+        <div class="btn-icon">🎨</div>
+        Theme
+      </button>
 
-</div>
+      <!-- Theme Dropdown: hidden by default, toggled by JS -->
+      <div class="theme-menu" id="themeMenu" role="dialog" aria-label="Theme selection">
+        <!-- Each radio calls selectTheme() with the chosen value -->
+        <label><input type="radio" name="theme" value="system" onclick="selectTheme('system')"> System default</label>
+        <label><input type="radio" name="theme" value="light"  onclick="selectTheme('light')">  Light</label>
+        <label><input type="radio" name="theme" value="dark"   onclick="selectTheme('dark')">   Dark</label>
+      </div>
 
-<div class="fixed-alert-wrapper">
+    </div>
+
+  </div>
+  <!-- END HEADER -->
+
+
+  <!-- TOAST POPUP -->
+  <div class="toast-wrapper">
     {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                <div class="alert alert-{{ 'success' if category == 'success' else 'info' }} alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endfor %}
-        {% endif %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="toast-popup {{ category }}">
+            <span class="toast-msg">{{ message }}</span>
+            <button class="toast-close" onclick="this.parentElement.remove()">✕</button>
+          </div>
+        {% endfor %}
+      {% endif %}
     {% endwith %}
-</div>
-
-<div class="container">
-
-<div class="horizontal-card-row">
-
-<div class="col-md-4">
-<div class="card-box">
-<div class="icon">📅</div>
-<h5>Cycle Tracker</h5>
-<p>Track and predict your next period</p>
-<a href="/tracker" class="btn btn-primary">Open Tracker</a>
-</div>
-</div>
-
-<div class="col-md-4">
-<div class="card-box">
-<div class="icon">📍</div>
-<h5>Find Machines</h5>
-<p>Locate nearby sanitary machines</p>
-<a href="/locator" class="btn btn-success">Open Locator</a>
-</div>
-</div>
-
-<div class="col-md-4">
-<div class="card-box">
-<div class="icon">📚</div>
-<h5>Health Education</h5>
-<p>Learn menstrual hygiene & health</p>
-<a href="/education" class="btn btn-warning">Open Education</a>
-</div>
-</div>
-
-</div>
-
-<br>
-
-<!-- HEALTH DATA CARDS -->
-
-<div class="horizontal-card-row">
-
-<div class="col-md-3">
-<div class="card-box">
-<div class="icon">🩸</div>
-<h6>Last Period</h6>
-<p>{{ last_period if last_period else "Not Recorded" }}</p>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card-box">
-<div class="icon">📆</div>
-<h6>Average Cycle</h6>
-<p>{{ cycle_length if cycle_length else "28 Days" }}</p>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card-box">
-<div class="icon">🔮</div>
-<h6>Next Expected</h6>
-<p>{{ next_period if next_period else "Use Tracker" }}</p>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card-box">
-<div class="icon">💪</div>
-<h6>Health Status</h6>
-<p>Healthy Cycle</p>
-</div>
-</div>
-
-</div>
-
-<br>
-
-<div class="tip-box">
-
-<h5>💡 Health Tip</h5>
-
-<p>
-Drink plenty of water and eat iron-rich foods like spinach,
-nuts, and fruits during your period to maintain energy.
-</p>
-
-</div>
-
-<br>
-
-<div class="text-center">
-
-<a href="/emergency" class="btn btn-danger">
-🚨 Emergency Help
-</a>
-
-</div>
-
-<br><br>
-
-</div>
-
-
-<!-- CHATBOT -->
-
-<button id="chatBtn" onclick="toggleChat()">💬</button>
-
-<div id="chatBox">
-
-<div class="chat-header">
-
-<span>MHM Assistant 🤖</span>
-
-<button class="close-chat" onclick="toggleChat()">✖</button>
-
-</div>
-
-<div id="chatMessages"></div>
-
-<div class="chat-input">
-
-<input type="text" id="userInput" placeholder="Ask about menstrual health...">
-
-<button onclick="sendMessage()">Send</button>
-
-</div>
-
-</div>
-
-<script>
-
-const body = document.getElementById("body");
-const themeMenu = document.getElementById("themeMenu");
-const themeButton = document.getElementById("themeButton");
-
-function openThemeMenu() {
-  themeMenu.style.display = themeMenu.style.display === "block" ? "none" : "block";
-}
-
-function closeThemeMenu() {
-  themeMenu.style.display = "none";
-}
-
-function applyTheme(theme) {
-  body.classList.remove("light-theme", "dark-theme", "system-theme");
-
-  if (theme === "light") {
-    body.classList.add("light-theme");
-  } else if (theme === "dark") {
-    body.classList.add("dark-theme");
-  } else {
-    body.classList.add("system-theme");
-  }
-
-  localStorage.setItem("mhmTheme", theme);
-  updateThemeRadios(theme);
-}
-
-function selectTheme(theme) {
-  applyTheme(theme);
-  closeThemeMenu();
-}
-
-function updateThemeRadios(theme) {
-  document.querySelectorAll('input[name="theme"]').forEach(input => {
-    input.checked = input.value === theme;
-  });
-}
-
-function initTheme() {
-  const saved = localStorage.getItem("mhmTheme") || "system";
-  applyTheme(saved);
-  themeMenu.style.display = "none";
-}
-
-window.addEventListener("click", function(event) {
-  if (themeMenu.style.display === "block" && !event.target.closest("#themeMenu") && !event.target.closest("#themeButton")) {
-    closeThemeMenu();
-  }
-});
-
-function toggleChat(){
-
-let box = document.getElementById("chatBox");
-
-if(box.style.display === "flex"){
-box.style.display = "none";
-}else{
-box.style.display = "flex";
-}
-
-}
-
-function sendMessage(){
-
-let input=document.getElementById("userInput");
-
-let message=input.value;
-
-if(message==="") return;
-
-let chat=document.getElementById("chatMessages");
-
-chat.innerHTML+="<div><b>You:</b> "+message+"</div>";
-
-fetch("/chatbot",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({message:message})
-})
-.then(res=>res.json())
-.then(data=>{
-chat.innerHTML+="<div><b>Bot:</b> "+data.reply+"</div>";
-chat.scrollTop=chat.scrollHeight;
-});
-
-input.value="";
-
-}
-
-document.getElementById("userInput")
-.addEventListener("keypress",function(e){
-if(e.key==="Enter"){
-sendMessage();
-}
-});
-
-initTheme();
-
-setTimeout(function() {
-    document.querySelectorAll('.fixed-alert-wrapper .alert').forEach(function(alert) {
-        alert.remove();
+  </div>
+
+
+  <!-- ================================================================
+       MAIN CONTENT WRAPPER
+       Bootstrap .container centres content and adds horizontal padding
+  ================================================================ -->
+  <div class="container">
+
+
+    <!-- ============================================================
+         SECTION C: FEATURE CARDS ROW
+         Three large glass cards linking to the main app features.
+    ============================================================ -->
+    <div class="horizontal-card-row">
+
+      <!-- Card 1: Cycle Tracker -->
+      <div class="col-md-4">
+        <div class="card-box glass">
+          <div class="icon">📅</div>
+          <h5>Cycle Tracker</h5>
+          <p>Track and predict your next period</p>
+          <a href="/tracker" class="btn btn-primary">Open Tracker</a>
+        </div>
+      </div>
+
+      <!-- Card 2: Find Nearby Sanitary Machines -->
+      <div class="col-md-4">
+        <div class="card-box glass">
+          <div class="icon">📍</div>
+          <h5>Find Machines</h5>
+          <p>Locate nearby sanitary machines</p>
+          <a href="/locator" class="btn btn-success">Open Locator</a>
+        </div>
+      </div>
+
+      <!-- Card 3: Health Education -->
+      <div class="col-md-4">
+        <div class="card-box glass">
+          <div class="icon">📚</div>
+          <h5>Health Education</h5>
+          <p>Learn menstrual hygiene & health</p>
+          <a href="/education" class="btn btn-warning">Open Education</a>
+        </div>
+      </div>
+
+    </div>
+    <!-- END FEATURE CARDS ROW -->
+
+    <br>
+
+
+    <!-- ============================================================
+         SECTION D: HEALTH DATA STAT CARDS ROW
+         Four small glass cards showing the user's cycle data.
+         Values are passed from Flask via Jinja2 template variables.
+    ============================================================ -->
+    <div class="horizontal-card-row">
+
+      <!-- Stat Card 1: Last Period Date -->
+      <div class="col-md-3">
+        <div class="card-box glass" onclick="document.getElementById('historyModal').style.display='flex'" style="cursor:pointer;">
+          <div class="icon">🩸</div>
+          <h6>Last Period</h6>
+          <p>{{ last_period if last_period else "Not Recorded" }}</p>
+        </div>
+      </div>
+
+      <!-- Stat Card 2: Average Cycle Length -->
+      <!-- {{ cycle_length }} from Flask; fallback = "28 Days" -->
+      <div class="col-md-3">
+        <div class="card-box glass">
+          <div class="icon">📆</div>
+          <h6>Average Cycle</h6>
+          <p>{{ cycle_length if cycle_length else "28 Days" }}</p>
+        </div>
+      </div>
+
+      <!-- Stat Card 3: Next Expected Period -->
+      <!-- {{ next_period }} from Flask; fallback = "Use Tracker" -->
+      <div class="col-md-3">
+        <div class="card-box glass">
+          <div class="icon">🔮</div>
+          <h6>Next Expected</h6>
+          <p>{{ next_period if next_period else "Use Tracker" }}</p>
+        </div>
+      </div>
+
+      <!-- Stat Card 4: Health Status (static for now) -->
+      <div class="col-md-3">
+        <div class="card-box glass">
+          <div class="icon">💪</div>
+          <h6>Health Status</h6>
+          <p>Healthy Cycle</p>
+        </div>
+      </div>
+
+    </div>
+    <!-- END HEALTH DATA STAT CARDS ROW -->
+
+    <br>
+
+
+    <!-- ============================================================
+         SECTION E: HEALTH TIP BOX
+         Glass panel showing a daily health tip.
+         Can be made dynamic later by passing tip from Flask.
+    ============================================================ -->
+    <div class="tip-box glass">
+      <h5>💡 Health Tip</h5>
+      <p>
+        Drink plenty of water and eat iron-rich foods like spinach,
+        nuts, and fruits during your period to maintain energy.
+      </p>
+    </div>
+
+    <br>
+
+
+    <!-- ============================================================
+         SECTION F: EMERGENCY HELP BUTTON
+         Red danger button linking to /emergency route.
+    ============================================================ -->
+    <div class="text-center">
+      <a href="/emergency" class="btn btn-danger">
+        🚨 Emergency Help
+      </a>
+    </div>
+
+    <br><br>
+
+  </div>
+  <!-- END .container -->
+
+
+  <!-- ================================================================
+       SECTION G: FLOATING CHAT BUTTON
+       Fixed bottom-right. Clicking runs toggleChat() to show/hide popup.
+  ================================================================ -->
+  <!-- HISTORY MODAL -->
+  <div class="modal-overlay" id="historyModal" onclick="if(event.target===this)this.style.display='none'">
+    <div class="modal-box">
+
+      <div class="modal-header">
+        <span class="modal-title">🩸 Period Track History</span>
+        <button class="modal-close" onclick="document.getElementById('historyModal').style.display='none'">✕</button>
+      </div>
+
+      {% if history %}
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Last Period</th>
+            <th>Cycle Length</th>
+            <th>Next Period</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for record in history %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ record.last_period }}</td>
+            <td>{{ record.cycle_length }} days</td>
+            <td>{{ record.next_period }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <div class="no-history">📊 No period history recorded yet.<br>Use the Cycle Tracker to add your first entry.</div>
+      {% endif %}
+
+    </div>
+  </div>
+
+  <button id="chatBtn" onclick="toggleChat()">💬</button>
+
+
+  <!-- ================================================================
+       SECTION H: CHAT POPUP BOX
+       Hidden (display:none) by default.
+       JS toggleChat() switches it to display:flex to show it.
+       .glass class gives the transparent background.
+  ================================================================ -->
+  <div id="chatBox" class="glass">
+
+    <!-- Chat window top bar: title + close button -->
+    <div class="chat-header">
+      <span>MHM Assistant 🤖</span>
+      <button class="close-chat" onclick="toggleChat()">✖</button>
+    </div>
+
+    <!-- Message history: user + bot messages are appended here by JS -->
+    <div id="chatMessages"></div>
+
+    <!-- Bottom input row: type a message + press Send or Enter -->
+    <div class="chat-input">
+      <input type="text" id="userInput" placeholder="Ask about menstrual health...">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+
+  </div>
+  <!-- END CHAT BOX -->
+
+
+  <!-- ================================================================
+       JAVASCRIPT
+       All interactive behaviour: theme switching, chat toggle, send msg
+  ================================================================ -->
+  <script>
+
+    // ── DOM references ──────────────────────────────────────────────
+    const body        = document.getElementById("body");       // <body> element — receives theme class
+    const themeMenu   = document.getElementById("themeMenu");  // theme dropdown panel
+    const themeButton = document.getElementById("themeButton");// Theme button (to detect outside clicks)
+
+
+    // ── THEME MENU: open / close ────────────────────────────────────
+
+    /* Opens or closes the theme dropdown when Theme button is clicked */
+    function openThemeMenu() {
+      // If already open → close it; if closed → open it
+      themeMenu.style.display = themeMenu.style.display === "block" ? "none" : "block";
+    }
+
+    /* Closes the dropdown (called by selectTheme and outside-click listener) */
+    function closeThemeMenu() {
+      themeMenu.style.display = "none";
+    }
+
+    /* Close dropdown if user clicks anywhere OUTSIDE the menu or button */
+    window.addEventListener("click", function(event) {
+      if (
+        themeMenu.style.display === "block" &&
+        !event.target.closest("#themeMenu") &&   // click was not inside menu
+        !event.target.closest("#themeButton")    // click was not on the button
+      ) {
+        closeThemeMenu();
+      }
     });
-}, 3500);
 
-</script>
+
+    // ── THEME APPLY ─────────────────────────────────────────────────
+
+    /* Applies the chosen theme by swapping the class on <body>.
+       Also saves the choice to localStorage so it survives page reload. */
+    function applyTheme(theme) {
+      // Step 1: Remove all existing theme classes
+      body.classList.remove("light-theme", "dark-theme", "system-theme");
+
+      // Step 2: Add the correct one
+      if (theme === "light") {
+        body.classList.add("light-theme");
+      } else if (theme === "dark") {
+        body.classList.add("dark-theme");
+      } else {
+        body.classList.add("system-theme"); // "system" = follow OS preference
+      }
+
+      // Step 3: Save to localStorage (persists across page loads)
+      localStorage.setItem("mhmTheme", theme);
+
+      // Step 4: Update the radio buttons to reflect the active theme
+      updateThemeRadios(theme);
+    }
+
+    /* Called when user clicks a radio label — applies theme and closes menu */
+    function selectTheme(theme) {
+      applyTheme(theme);
+      closeThemeMenu();
+    }
+
+    /* Syncs the radio button checked state to match the active theme */
+    function updateThemeRadios(theme) {
+      document.querySelectorAll('input[name="theme"]').forEach(function(input) {
+        input.checked = (input.value === theme);
+      });
+    }
+
+    /* Runs once on page load — reads saved theme from localStorage (default: system) */
+    function initTheme() {
+      const saved = localStorage.getItem("mhmTheme") || "system";
+      applyTheme(saved);
+      themeMenu.style.display = "none";   // always start with menu closed
+    }
+
+
+    // ── CHAT BOX ────────────────────────────────────────────────────
+
+    /* Toggles the chat popup open/closed */
+    function toggleChat() {
+      const box = document.getElementById("chatBox");
+      // "flex" = visible (chat is open), "none" = hidden (chat is closed)
+      box.style.display = (box.style.display === "flex") ? "none" : "flex";
+    }
+
+    /* Sends user message to Flask /chatbot endpoint and shows the reply */
+    function sendMessage() {
+      const input   = document.getElementById("userInput");
+      const message = input.value.trim();
+
+      // Don't send blank messages
+      if (message === "") return;
+
+      const chat = document.getElementById("chatMessages");
+
+      // 1. Show user's message instantly in the chat window
+      chat.innerHTML += "<div style='margin-bottom:6px'><b>You:</b> " + message + "</div>";
+
+      // 2. POST to Flask /chatbot route
+      fetch("/chatbot", {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify({ message: message })
+      })
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        // 3. Append bot reply below the user message
+        chat.innerHTML += "<div style='margin-bottom:6px'><b>Bot:</b> " + data.reply + "</div>";
+        // 4. Auto-scroll to the newest message
+        chat.scrollTop = chat.scrollHeight;
+      });
+
+      // 5. Clear the text input so user can type next message
+      input.value = "";
+    }
+
+    /* Allow pressing Enter key to send (same as clicking Send button) */
+    document.getElementById("userInput").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") { sendMessage(); }
+    });
+
+
+    // ── TOAST: auto-dismiss after 3.5 seconds ────────────────
+    setTimeout(function() {
+      document.querySelectorAll('.toast-popup').forEach(function(t) {
+        t.style.transition = 'opacity .5s, transform .5s';
+        t.style.opacity = '0';
+        t.style.transform = 'translateX(80px) scale(0.85)';
+        setTimeout(()=> t.remove(), 500);
+      });
+    }, 3500);
+
+
+    // ── INIT ────────────────────────────────────────────────────────
+    // Run theme init as the very last step so all DOM is ready
+    initTheme();
+
+  </script>
 
 </body>
 </html>

@@ -1,88 +1,222 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 
-<title>Cycle Tracker</title>
-
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<title>CareForHer - Cycle Tracker</title>
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
 <style>
 
-body{
-height:100vh;
+*{
 margin:0;
-font-family:Arial, Helvetica, sans-serif;
-
-/* crystal background */
-background:linear-gradient(135deg,#fbc2eb,#a6c1ee);
-
-display:flex;   
-align-items:center;
-justify-content:center;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
 }
 
-/* glass card */
+body{
+
+min-height:100vh;
+
+background:linear-gradient(
+-45deg,
+#ffdde1,
+#ee9ca7,
+#c9d6ff,
+#e2e2e2
+);
+
+background-size:400% 400%;
+
+animation:gradientBG 12s ease infinite;
+
+padding:40px 15px;
+}
+
+@keyframes gradientBG{
+
+0%{
+background-position:0% 50%;
+}
+
+50%{
+background-position:100% 50%;
+}
+
+100%{
+background-position:0% 50%;
+}
+
+}
+
+.main-container{
+max-width:1100px;
+margin:auto;
+}
 
 .glass-card{
 
-width:420px;
-padding:35px;
-
-background:rgba(255,255,255,0.25);
-
-border-radius:20px;
+background:rgba(255,255,255,0.18);
 
 backdrop-filter:blur(15px);
 -webkit-backdrop-filter:blur(15px);
 
-border:1px solid rgba(255,255,255,0.4);
+border:1px solid rgba(255,255,255,0.35);
 
-box-shadow:0 8px 32px rgba(0,0,0,0.25);
+border-radius:24px;
 
-color:#333;
+padding:25px;
 
+box-shadow:0 8px 32px rgba(0,0,0,0.15);
+
+transition:.3s;
+}
+
+.glass-card:hover{
+
+transform:translateY(-4px);
+
+}
+
+.tracker-card{
+
+max-width:650px;
+margin:auto;
 }
 
 h2{
-text-align:center;
-margin-bottom:20px;
-font-weight:600;
+font-weight:700;
+color:#333;
 }
-
-/* input style */
 
 .form-control{
-border-radius:12px;
-padding:10px;
+
+border-radius:15px;
+padding:12px;
+
+border:none;
 }
 
-/* result box */
-
-.result{
-
-background:rgba(255,255,255,0.5);
-padding:15px;
-border-radius:10px;
-margin-top:15px;
-text-align:center;
-font-size:18px;
+.form-range{
+cursor:pointer;
 }
-
-/* button */
 
 .btn-main{
-border-radius:25px;
-padding:10px;
-font-weight:bold;
-transition:0.3s;
+
+background:#ff4d6d;
+color:white;
+
+border:none;
+
+border-radius:30px;
+
+padding:12px;
+
+font-weight:600;
+
+transition:.3s;
 }
 
 .btn-main:hover{
-transform:scale(1.05);
+
+background:#e63956;
+
+transform:scale(1.02);
+}
+
+.stat-card{
+
+text-align:center;
+height:180px;
+
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+}
+
+.stat-card h3{
+
+font-size:32px;
+
+font-weight:700;
+
+color:#ff4d6d;
+}
+
+.stat-card p{
+
+margin:0;
+
+font-size:15px;
+}
+
+.result-card{
+
+text-align:center;
+margin-top:25px;
+}
+
+.result-card h4{
+
+font-weight:700;
+color:#ff4d6d;
+}
+
+.health-tips ul{
+
+padding-left:20px;
+margin-top:10px;
+}
+
+.health-tips li{
+margin-bottom:10px;
+}
+
+.glass-btn{
+
+display:inline-block;
+
+padding:12px 28px;
+
+border-radius:30px;
+
+background:rgba(255,255,255,0.2);
+
+border:1px solid rgba(255,255,255,0.4);
+
+backdrop-filter:blur(10px);
+
+text-decoration:none;
+
+font-weight:600;
+
+color:#333;
+
+transition:.3s;
+}
+
+.glass-btn:hover{
+
+background:rgba(255,255,255,0.4);
+
+color:#000;
+
+transform:translateY(-2px);
+}
+
+.section-title{
+
+font-size:20px;
+font-weight:700;
+margin-bottom:15px;
+
+color:#333;
 }
 
 </style>
@@ -91,60 +225,187 @@ transform:scale(1.05);
 
 <body>
 
-<div class="glass-card">
+<div class="main-container">
 
-<h2>🌸 Cycle Tracker</h2>
+    <!-- TRACKER CARD -->
 
-<form method="POST">
+    <div class="glass-card tracker-card">
 
-<label class="mb-1">Last Period Date</label>
+        <h2 class="text-center mb-4">
+            🌸 Cycle Tracker
+        </h2>
 
-<input
-type="text"
-id="datePicker"
-name="last_period"
-class="form-control mb-3"
-placeholder="Select date"
-required
->
+        <form method="POST">
 
-<label class="mb-1">Cycle Length (days)</label>
+            <label class="mb-2 fw-semibold">
+                Last Period Date
+            </label>
 
-<input
-type="number"
-name="cycle_length"
-class="form-control mb-3"
-placeholder="Example: 30"
-required
->
+            <input
+                type="text"
+                id="datePicker"
+                name="last_period"
+                class="form-control mb-4"
+                placeholder="Select Date"
+                required>
 
-<button class="btn btn-danger w-100 btn-main">
-Predict Next Period
-</button>
+            <label class="fw-semibold mb-2">
 
-</form>
+                Cycle Length :
+                <span id="cycleValue">28</span> Days
 
-{% if prediction %}
+            </label>
 
-<div class="result">
+            <input
+                type="range"
+                min="21"
+                max="40"
+                value="28"
+                id="cycleSlider"
+                name="cycle_length"
+                class="form-range">
 
-🩸 Next Period Expected On
+            <button
+                type="submit"
+                class="btn-main w-100 mt-4">
 
-<br><br>
+                Predict Next Period
 
-<strong>{{ prediction }}</strong>
+            </button>
 
-</div>
+        </form>
 
-{% endif %}
+    </div>
 
-<div class="text-center mt-3">
+    <!-- PREDICTION CARD -->
 
-<a href="/dashboard" class="btn btn-secondary">
-Back
-</a>
+    {% if prediction %}
 
-</div>
+    <div class="glass-card result-card mt-4">
+
+        <h4>🩸 Next Period Prediction</h4>
+
+        <h2>{{ prediction }}</h2>
+
+        <p class="text-muted">
+            Estimated date based on your cycle length.
+        </p>
+
+    </div>
+
+    {% endif %}
+
+    <!-- INSIGHTS -->
+
+    <div class="row mt-4 g-4">
+
+        <div class="col-md-4">
+
+            <div class="glass-card stat-card">
+
+                <h3>28</h3>
+
+                <p>Average Cycle Days</p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="glass-card stat-card">
+
+                <h3>14</h3>
+
+                <p>Ovulation Day</p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="glass-card stat-card">
+
+                <h3>11-16</h3>
+
+                <p>Fertile Window</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- OVULATION CARD -->
+
+    <div class="glass-card mt-4">
+
+        <div class="section-title">
+            🌼 Ovulation Information
+        </div>
+
+        <p>
+            Ovulation generally occurs around the 14th day of a
+            28-day cycle. This is the period when pregnancy is
+            most likely if conception is desired.
+        </p>
+
+    </div>
+
+    <!-- FERTILE WINDOW CARD -->
+
+    <div class="glass-card mt-4">
+
+        <div class="section-title">
+            💖 Fertile Window
+        </div>
+
+        <p>
+            The fertile window usually starts 5 days before
+            ovulation and ends 1 day after ovulation.
+            Tracking this period helps understand reproductive health.
+        </p>
+
+    </div>
+
+    <!-- HEALTH TIPS CARD -->
+
+    <div class="glass-card health-tips mt-4">
+
+        <div class="section-title">
+            💡 Health Tips
+        </div>
+
+        <ul>
+
+            <li>Drink plenty of water throughout the day.</li>
+
+            <li>Maintain a balanced diet rich in iron and vitamins.</li>
+
+            <li>Track your cycle regularly for accurate predictions.</li>
+
+            <li>Exercise moderately to reduce cramps and stress.</li>
+
+            <li>Sleep at least 7–8 hours daily.</li>
+
+            <li>Consult a healthcare professional for irregular cycles.</li>
+
+        </ul>
+
+    </div>
+
+    <!-- BACK BUTTON -->
+
+    <div class="text-center mt-4">
+
+        <a href="/dashboard" class="glass-btn">
+
+            ← Back to Dashboard
+
+        </a>
+
+    </div>
 
 </div>
 
@@ -153,12 +414,25 @@ Back
 <script>
 
 flatpickr("#datePicker",{
+
 dateFormat:"Y-m-d",
+
 maxDate:"today"
+
 });
+
+const slider = document.getElementById("cycleSlider");
+const value = document.getElementById("cycleValue");
+
+value.innerHTML = slider.value;
+
+slider.oninput = function(){
+
+value.innerHTML = this.value;
+
+};
 
 </script>
 
 </body>
 </html>
-

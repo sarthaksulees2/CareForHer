@@ -2,7 +2,7 @@
 <html>
 <head>
 
-<title>Menstrual Health Quiz</title>
+<title>CareForHer - Health Quiz</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -11,37 +11,65 @@
 <style>
 
 body{
-margin:0;
-font-family:Segoe UI;
-background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+font-family:'Segoe UI',sans-serif;
+background:linear-gradient(-45deg,#ffdde1,#ee9ca7,#c2e9fb,#fbc2eb);
+background-size:400% 400%;
+animation:bg 12s ease infinite;
 min-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
+padding:30px;
+}
+
+@keyframes bg{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
 }
 
 .quiz-card{
-
-background:white;
-
-padding:35px;
-
-border-radius:18px;
-
-max-width:650px;
-
-width:100%;
-
-box-shadow:0 10px 30px rgba(0,0,0,0.2);
-
+max-width:900px;
+margin:auto;
+background:rgba(255,255,255,.18);
+backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,.3);
+border-radius:25px;
+padding:30px;
+box-shadow:0 8px 30px rgba(0,0,0,.15);
 }
 
 .question{
-margin-top:20px;
+margin-top:25px;
+padding:15px;
+background:rgba(255,255,255,.25);
+border-radius:15px;
 }
 
-button{
-margin-top:20px;
+.glow-btn{
+background:linear-gradient(45deg,#ff4081,#7c4dff);
+border:none;
+padding:12px;
+border-radius:30px;
+color:white;
+font-weight:600;
+width:100%;
+}
+
+.glass-btn{
+display:inline-block;
+padding:12px 25px;
+background:rgba(255,255,255,.2);
+border:1px solid rgba(255,255,255,.4);
+border-radius:30px;
+text-decoration:none;
+color:#333;
+font-weight:600;
+}
+
+#result{
+margin-top:25px;
+padding:20px;
+border-radius:15px;
+background:rgba(255,255,255,.3);
+display:none;
 }
 
 </style>
@@ -52,59 +80,91 @@ margin-top:20px;
 
 <div class="quiz-card">
 
-<h3 class="text-center">🧠 Menstrual Health Quiz</h3>
+<h2 class="text-center mb-3">🧠 Menstrual Health Quiz</h2>
+
+<p class="text-center">
+Test your menstrual health knowledge.
+</p>
 
 <form id="quizForm">
 
 <div class="question">
-
-<p><b>1. What is the average menstrual cycle length?</b></p>
-
-<input type="radio" name="q1" value="0"> 14 days<br>
-<input type="radio" name="q1" value="1"> 28 days<br>
-<input type="radio" name="q1" value="0"> 45 days<br>
-
+<p><b>1. Average menstrual cycle length?</b></p>
+<input type="radio" name="q1" value="0"> 14 Days<br>
+<input type="radio" name="q1" value="1"> 28 Days<br>
+<input type="radio" name="q1" value="0"> 50 Days
 </div>
 
 <div class="question">
-
-<p><b>2. Which nutrient helps reduce fatigue during periods?</b></p>
-
-<input type="radio" name="q2" value="1"> Iron<br>
-<input type="radio" name="q2" value="0"> Sugar<br>
-<input type="radio" name="q2" value="0"> Salt<br>
-
+<p><b>2. How often should pads be changed?</b></p>
+<input type="radio" name="q2" value="0"> Once Daily<br>
+<input type="radio" name="q2" value="1"> Every 4–6 Hours<br>
+<input type="radio" name="q2" value="0"> Every 12 Hours
 </div>
 
 <div class="question">
-
-<p><b>3. How often should sanitary pads be changed?</b></p>
-
-<input type="radio" name="q3" value="0"> Every 12 hours<br>
-<input type="radio" name="q3" value="1"> Every 4-6 hours<br>
-<input type="radio" name="q3" value="0"> Once a day<br>
-
+<p><b>3. Which nutrient helps prevent anemia?</b></p>
+<input type="radio" name="q3" value="1"> Iron<br>
+<input type="radio" name="q3" value="0"> Sugar<br>
+<input type="radio" name="q3" value="0"> Salt
 </div>
 
 <div class="question">
-
-<p><b>4. Can exercise help reduce menstrual cramps?</b></p>
-
+<p><b>4. Can exercise reduce cramps?</b></p>
 <input type="radio" name="q4" value="1"> Yes<br>
-<input type="radio" name="q4" value="0"> No<br>
-
+<input type="radio" name="q4" value="0"> No
 </div>
 
-<button type="button" class="btn btn-danger w-100" onclick="submitQuiz()">
+<div class="question">
+<p><b>5. Menstruation is a:</b></p>
+<input type="radio" name="q5" value="1"> Natural Process<br>
+<input type="radio" name="q5" value="0"> Disease
+</div>
+
+<div class="question">
+<p><b>6. Drinking water during periods helps?</b></p>
+<input type="radio" name="q6" value="1"> Reduce discomfort<br>
+<input type="radio" name="q6" value="0"> Causes cramps
+</div>
+
+<div class="question">
+<p><b>7. Typical period duration?</b></p>
+<input type="radio" name="q7" value="1"> 3–7 Days<br>
+<input type="radio" name="q7" value="0"> 15–20 Days
+</div>
+
+<div class="question">
+<p><b>8. PCOS can cause?</b></p>
+<input type="radio" name="q8" value="1"> Irregular Periods<br>
+<input type="radio" name="q8" value="0"> Better Vision
+</div>
+
+<div class="question">
+<p><b>9. Bathing during periods?</b></p>
+<input type="radio" name="q9" value="1"> Is Safe<br>
+<input type="radio" name="q9" value="0"> Must Be Avoided
+</div>
+
+<div class="question">
+<p><b>10. Severe pain and heavy bleeding should be:</b></p>
+<input type="radio" name="q10" value="1"> Checked by a Doctor<br>
+<input type="radio" name="q10" value="0"> Ignored
+</div>
+
+<button type="button" class="glow-btn mt-4" onclick="submitQuiz()">
 Submit Quiz
 </button>
 
 </form>
 
-<div id="result" class="text-center mt-4"></div>
+<div id="result"></div>
 
-<div class="text-center mt-3">
-<a href="/education" class="btn btn-dark">Back</a>
+<div class="text-center mt-4">
+
+<a href="/education" class="glass-btn">
+⬅ Back to Education
+</a>
+
 </div>
 
 </div>
@@ -115,14 +175,31 @@ function submitQuiz(){
 
 let score = 0;
 
-let answers = document.querySelectorAll("input[type=radio]:checked");
+let selected =
+document.querySelectorAll("input[type=radio]:checked");
 
-answers.forEach((ans)=>{
+selected.forEach(ans=>{
 score += parseInt(ans.value);
 });
 
+let msg = "";
+
+if(score >= 9){
+msg = "🏆 Excellent Knowledge!";
+}
+else if(score >= 6){
+msg = "🌟 Good Knowledge!";
+}
+else{
+msg = "📚 Keep Learning!";
+}
+
+document.getElementById("result").style.display="block";
+
 document.getElementById("result").innerHTML =
-"<h4>Your Score: "+score+" / 4</h4>";
+
+"<h3>Your Score: "+score+"/10</h3>" +
+"<h4>"+msg+"</h4>";
 
 }
 

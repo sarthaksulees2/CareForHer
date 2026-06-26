@@ -6,14 +6,34 @@ from sqlalchemy.exc import IntegrityError
 from datetime import datetime, timedelta
 import os
 from dotenv import load_dotenv
+import google.genai as genai
+from google.genai import types
 
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = "mhm_secret_key"
+app.secret_key = os.environ.get("SECRET_KEY", "mhm_secret_key")
+
+# Gemini AI setup
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
+gemini_client = None
+if GEMINI_API_KEY:
+    try:
+        gemini_client = genai.Client(api_key=GEMINI_API_KEY)
+    except Exception:
+        gemini_client = None
+
+SYSTEM_PROMPT = (
+    "You are MHM Assistant, a caring and knowledgeable menstrual health assistant "
+    "for the Care For Her platform. Only answer questions related to menstrual health, "
+    "hygiene, reproductive health, nutrition, mental wellness during periods, "
+    "cycle tracking, and women's health. "
+    "Keep answers concise, warm, and easy to understand. "
+    "If a question is unrelated to women's or menstrual health, politely decline."
+)
 
 # PostgreSQL Configuration
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:root@localhost:5433/careforher"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "postgresql://postgres:root@localhost:5433/careforher")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
@@ -102,19 +122,29 @@ def quiz():
 def chatbot():
 
     data = request.get_json()
-    msg = data["message"].lower()
+    msg = data.get("message", "").strip()
 
-    if "period" in msg:
-        reply = "A menstrual cycle usually lasts 21-35 days."
+    if not msg:
+        return jsonify({"reply": "Please type a message."})
 
-    elif "cramps" in msg:
-        reply = "Cramps happen because the uterus contracts."
+    if not gemini_client:
+        return jsonify({"reply": "AI assistant is not configured yet. Please add the GEMINI_API_KEY."})
 
-    elif "pad" in msg:
-        reply = "Change sanitary pads every 4-6 hours."
-
-    else:
-        reply = "I'm here to help with menstrual health."
+    try:
+        response = gemini_client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=msg,
+            config=types.GenerateContentConfig(
+                system_instruction=SYSTEM_PROMPT
+            )
+        )
+        reply = response.text
+    except Exception as e:
+        print("Gemini error:", e)
+        if "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e):
+            reply = "⏳ The AI is temporarily unavailable due to rate limits. Please try again in a minute."
+        else:
+            reply = "Sorry, I couldn't process that. Please try again."
 
     return jsonify({"reply": reply})
 
@@ -137,6 +167,7 @@ def profile():
 
         user.name = request.form.get("name")
         user.email = request.form.get("email")
+        user.phone = request.form.get("phone") or user.phone
 
         age = request.form.get("age")
         height = request.form.get("height")
@@ -150,9 +181,23 @@ def profile():
 
         session["user"] = user.name
 
+        # Handle password change
+        current_password = request.form.get("current_password")
+        new_password = request.form.get("new_password")
+        confirm_password = request.form.get("confirm_password")
+
+        if current_password and new_password:
+            if not check_password_hash(user.password, current_password):
+                flash("❌ Current password is incorrect.", "danger")
+                return redirect("/profile")
+            if new_password != confirm_password:
+                flash("❌ New passwords do not match.", "danger")
+                return redirect("/profile")
+            user.password = generate_password_hash(new_password)
+
         db.session.commit()
 
-        flash("✅ Profile updated successfully!")
+        flash("✅ Profile updated successfully!", "success")
 
         return redirect("/profile")
 
@@ -222,7 +267,7 @@ def register():
             "success",
         )
 
-        return redirect("/login")
+        return render_template("register.html")
 
     return render_template("register.html")
 
@@ -233,6 +278,7 @@ def register():
 def login():
 
     error = None
+    no_user = False
 
     if request.method == "POST":
 
@@ -249,10 +295,13 @@ def login():
 
             return redirect("/dashboard")
 
-        else:
-            error = "Wrong email or password"
+        elif not user:
+            no_user = True
 
-    return render_template("login.html", error=error)
+        else:
+            error = "Wrong password. Please try again."
+
+    return render_template("login.html", error=error, no_user=no_user)
 
 
 # ================= DASHBOARD =================
@@ -279,12 +328,19 @@ def dashboard():
     next_period = cycle.next_period if cycle else None
     cycle_length = cycle.cycle_length if cycle else 28
 
+    history = (
+        Cycle.query.filter_by(user_name=user.name)
+        .order_by(Cycle.id.desc())
+        .all()
+    )
+
     return render_template(
         "dashboard.html",
         name=user.name,
         last_period=last_period,
         next_period=next_period,
         cycle_length=cycle_length,
+        history=history,
     )
 
 
@@ -317,7 +373,8 @@ def tracker():
 
         last_period = request.form["last_period"]
 
-        cycle_length = user.cycle_length if user.cycle_length else 28
+        form_cycle = request.form.get("cycle_length")
+        cycle_length = int(form_cycle) if form_cycle else (user.cycle_length if user.cycle_length else 28)
 
         last_date = datetime.strptime(last_period, "%Y-%m-%d")
 
@@ -346,7 +403,7 @@ def locator():
     if "user" not in session:
         return redirect("/login")
 
-    return render_template("locator.html")
+    return render_template("locator.html", maps_api_key=os.environ.get("MAPS_API_KEY", ""))
 
 
 # ================= EDUCATION =================
